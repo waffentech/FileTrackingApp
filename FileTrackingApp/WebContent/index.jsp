@@ -6,12 +6,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>User Authentication</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet"	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-		<!-- <link href="html5-boilerplate/css/bootstrap.min.css" rel="stylesheet"> -->
+<!-- 		<link rel="stylesheet"	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
+		<link href="html5-boilerplate/css/bootstrap.min.css" rel="stylesheet">
 		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
 		<script src="html5-boilerplate/js/vendor/jquery-1.11.3.min.js"></script>
-		<!-- <script src="html5-boilerplate/js/vendor/bootstrap.min.js"></script> -->
-		<script	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="html5-boilerplate/js/vendor/bootstrap.min.js"></script>
+<!-- 		<script	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> -->
     </head>
     <body>
     <div class="container">
@@ -21,6 +21,9 @@
                    var="loginUser"
                    value=""/>
     	</c:if>
+		<c:if test="${not empty param.errMsg}">
+	          <div class="alert alert-danger" role="alert"><strong>Warning! </strong><c:out value="${param.errMsg}" /></div>
+	    </c:if>
     	<div>
     		<div>
     			<h1 class="text-center jumbotron" >File Tracking App <small><sub>by WaffenTech</sub></small></h1>
@@ -39,9 +42,14 @@
 		        <button class="btn btn-primary btn-block" type="submit">Sign in</button>
 	      </form>
 	     </div>
-        	    <c:if test="${not empty param.errMsg}">
-	            <c:out value="${param.errMsg}" />
-	            </c:if>
        </div>
     </body>
+       <style type="text/css">
+   		#form {
+			background-color: antiquewhite;
+			padding-top: 25px;
+			padding-bottom: 25px;
+			border-radius: 6px;
+		}
+   </style>
 </html>

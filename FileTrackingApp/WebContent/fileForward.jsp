@@ -23,8 +23,8 @@
 			<c:param name="errMsg" value="1" />
 		</c:redirect>
 	</c:if>
-	<sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
-		url="jdbc:mysql://localhost/file_mgmt" user="root" password="" />
+<%-- 	<sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
+		url="jdbc:mysql://localhost/file_mgmt" user="root" password="" /> --%>
 
 	<sql:query dataSource="${snapshot}" var="result">
 SELECT * from file_details where file_id = ${param.fileid} and (to_user = ( select user_id from user where user_name ='${sessionScope['loginUser']}' ) OR exists ( select 1 from user where user_name = '${sessionScope['loginUser']}' and role in ('admin','superuser')));

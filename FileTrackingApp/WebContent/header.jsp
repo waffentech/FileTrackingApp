@@ -12,14 +12,15 @@
 <!-- <link href="html5-boilerplate/css/bootstrap.min.css" rel="stylesheet"> -->
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
 <script src="html5-boilerplate/js/vendor/jquery-1.11.3.min.js"></script>
-<!-- <script src="html5-boilerplate/js/vendor/bootstrap.min.js"></script> -->
-<script	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
+<script src="html5-boilerplate/js/vendor/bootstrap.min.js"></script>
+<!-- <script	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> -->
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.3/css/bootstrap-select.min.css">
 <!-- 		<script src="http://code.jquery.com/ui/1.11.3/jquery-ui.js"></script> -->
 <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>  
 <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.4.0/lang/en-gb.js"></script>                
 <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.0.0/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.3/js/bootstrap-select.min.js"></script>
 </head>
 <body>
 	<nav class="navbar navbar-default navbar-fixed-top">
@@ -67,6 +68,8 @@
 			</div>
 		</div>
 	</nav>
+<sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
+	url="jdbc:mysql://localhost/file_mgmt" user="root" password="" />
 </body>
 <script type="text/javascript">
 function submitsearchform() {

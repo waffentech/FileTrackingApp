@@ -6,7 +6,7 @@
 	<div class="row">
 		<div class="text-left col-sm-6">
 			<h6 >
-			<a href="www.waffentech.com"  style="color : #FFF; margin : 10px;"  >About WaffenTech</a>
+			<a href="http://www.waffentech.com"  style="color : #FFF; margin : 10px;"  >About WaffenTech</a>
 			<a href="#" style="color : #FFF; margin : 10px;">Privacy</a>
 			<a href="#" style="color : #FFF; margin : 10px;">Terms</a>
 			<a href="#" style="color : #FFF; margin : 10px;">Help</a>

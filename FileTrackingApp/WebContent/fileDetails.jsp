@@ -18,131 +18,162 @@
 		<h1 class="text-center">File Details</h1>
 	</div>
 	<div>
-
         <c:if test="${empty param.fileid }">
             <c:redirect url="fileView.jsp" >
                 <c:param name="errMsg" value="1" />
             </c:redirect>
         </c:if> 
-
-		<sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
-			url="jdbc:mysql://localhost/file_mgmt" user="root" password="" />
-
+<%-- 		<sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
+			url="jdbc:mysql://localhost/file_mgmt" user="root" password="" /> --%>
 		<sql:query dataSource="${snapshot}" var="result">
 select fd.file_id, fd.file_name, fd.file_no, fd.file_type, fd.description, fd.owner_dept, fd.owner_sec, fd.owner, fd.priority, fd.created_date, fd.completed_date, fd.due_date, fd.is_active, fd.barcode_string, fd.tags, fd.remarks, fl.instance_id, fl.from_user, fl.to_user, fl.from_section, fl.to_section, concat(fl.priority,'') as priority_fl, concat(fl.remarks,'') as remarks_fl, fl.status, fl.forwarded_date, fl.received_date, fl.due_date from file_details fd, file_log fl where fd.file_id = fl.file_id and fd.file_id = ${param.fileid} and (fd.to_user = ( select user_id from user where user_name ='${sessionScope['loginUser']}' ) OR exists ( select 1 from user where user_name = '${sessionScope['loginUser']}' and role in ('admin','superuser'))) order by fl.instance_id desc;
 		</sql:query>
 		<div>
-				<c:forEach items="${result.rows}" begin="0" end="0" var="row" varStatus="counter">
+			<c:forEach items="${result.rows}" begin="0" end="0" var="row" varStatus="counter">
+				<div class="panel-group" id="accordion1">
+				    <div class="panel panel-default">
+				      <div class="panel-heading">
+				        <h4 class="panel-title">
+				          <a data-toggle="collapse" data-parent="#accordion1" href="#collapsedetails">Click to View File Information <span class="caret"></span></a>
+				        </h4>
+				      </div>
+				      <div id="collapsedetails" class="panel-collapse collapse">
+				        <div class="panel-body">
+				        	<div style=" margin : 5px;">
 						<div class="row">
-							<label class="control-label col-md-2">File Name<span class="small"></span></label>
-							<input class="col-md-4" type="text" name="fileName" value="${row.file_name}" disabled/>
-							<label class="control-label col-md-2">File Number<span class="small"></span></label>
-							<input class="col-md-4" type="text" name="fileNo" value="${row.file_no}" disabled/>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="control-label">File Name</label>
+									<input class="form-control" type="text" name="fileName" value="${row.file_name}" disabled/>
+								</div>
+								<div class="form-group">
+									<label class="control-label">File Number</label>
+									<input class="form-control" type="text" name="fileNo" value="${row.file_no}" disabled/>
+								</div>
+								<div class="form-group">
+									<label class="control-label">File Type<span class="small"></span></label>
+									<input class="form-control" type="text" name="fileType" value="${row.file_type}" disabled/>
+								</div>
+								<div class="form-group">
+									<label class="control-label">Tags<span class="small"></span></label>
+									<input class="form-control" type="text" name="tags" value="${row.tags}" disabled/>
+								</div>
+								<div class="form-group">
+									<label class="control-label">Owning Department<span class="small"></span></label>
+									<input class="form-control" type="text" name="ownerDept" value="${row.owner_dept}" disabled/>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="control-label">Owning Section<span class="small"></span></label>
+									<input class="form-control" type="text" name="ownerSec" value="${row.owner_sec}" disabled/>
+								</div>
+								<div class="form-group">
+									<label class="control-label">Owner<span class="small"></span></label>
+									<input class="form-control" type="text" name="owner" value="${row.owner}" disabled/>
+								</div>
+								<div class="form-group">
+									<label class="control-label">Created Date<span class="small"></span></label>
+									<input class="form-control" type="text" name="createdDate" value="${row.created_date}" disabled/>
+								</div>
+								<div class="form-group">
+									<label class="control-label">Is Active<span class="small"></span></label>
+									<input class="form-control" type="text" name="isActive" value="${row.is_active}" disabled/>
+								</div>
+								<div class="form-group">
+									<label class="control-label">Barcode String<span class="small"></span></label>
+									<input class="form-control" type="text" name="barcodeString" value="${row.barcode_string}" disabled/>
+								</div>
+							</div>
 						</div>
 						<div class="row">
-							<label class="control-label col-md-2">File Type<span class="small"></span></label>
-							<input class="col-md-4" type="text" name="fileType" value="${row.file_type}" disabled />
-							<label class="control-label col-md-2">Tags<span class="small"></span></label>
-							<input class="col-md-4" type="text" name="tags" value="${row.tags}" disabled/>
+							<div class="col-md-12">
+								<div class="form-group">
+									<label class="control-label">Description<span class="small"></span></label>
+									<textarea class="form-control" name="description" disabled>${row.description}</textarea>
+								</div>
+							</div>
 						</div>
-						<div class="row">
-							<label class="control-label col-md-2">Owning Department<span class="small"></span></label>
-							<input class="col-md-4" type="text" name="ownerDept" value="${row.owner_dept}" disabled/>
-							<label class="control-label col-md-2">Owning Section<span class="small"></span></label>
-							<input class="col-md-4" type="text" name="ownerSec" value="${row.owner_sec}" disabled/>
 						</div>
-						<div class="row">
-							<label class="control-label col-md-2">Owner<span class="small"></span></label>
-							<input class="col-md-4" type="text" name="owner" value="${row.owner}" disabled/>
-							<label class="control-label col-md-2">Created Date<span class="small"></span></label>
-							<input class="col-md-4" type="text" name="createdDate" value="${row.created_date}" disabled/>
 						</div>
-						<div class="row">
-							<label class="control-label col-md-2">Is Active<span class="small"></span></label>
-							<input class="col-md-4" type="text" name="isActive" value="${row.is_active}" disabled/>
-							<label class="control-label col-md-2">Barcode String<span class="small"></span></label>
-							<input class="col-md-4" type="text" name="barcodeString" value="${row.barcode_string}" disabled/>
-						</div>
-						<div class="row">
-							<label class="control-label col-md-2">Description<span class="small"></span></label>
-							<textarea class="col-md-10" name="description" disabled>${row.description}</textarea>
-						</div>
-  <div class="row">
-  <div class="panel-group" id="accordion">
-  <div class="col-md-6">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Click to View Barcode Image <span class="caret"></span></a>
-        </h4>
-      </div>
-      <div id="collapse1" class="panel-collapse collapse">
-        <div class="panel-body">
-			<img class="col-md-4" alt=<c:out value="${param.fileid}"/> style="width: 200px; height: 200px;"  src=<c:out value="http://localhost:8080/barcode4j/gensvg?type=code128&msg=${param.fileid}"/> /> 
-        </div>
-      </div>
-    </div>
-   </div>
-   <div class="col-md-6">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Click to View File Time Chart <span class="caret"></span></a>
-        </h4>
-      </div>
-      <div id="collapse2" class="panel-collapse collapse in">
-        <div class="panel-body">
-			<canvas class="col-md-4" id="myChart" class="chart" style="width: 200px; height: 200px;"></canvas> 
-			<div class="progress">
-			  <div class="progress-bar progress-bar-success" style="width: 35%">
-			    <span class="sr-only">35% Complete (success)</span>
-			  </div>
-			  <div class="progress-bar progress-bar-info" style="width: 20%">
-			    <span class="sr-only">20% Complete (info)</span>
-			  </div>
-			  <div class="progress-bar progress-bar-warning" style="width: 20%">
-			    <span class="sr-only">20% Complete (warning)</span>
-			  </div>
-			  <div class="progress-bar progress-bar-danger" style="width: 10%">
-			    <span class="sr-only">10% Complete (danger)</span>
-			  </div>
-			  <div class="progress-bar progress-bar-success progress-bar-striped" style="width: 10%">
-			    <span class="sr-only">10% Complete (danger)</span>
-			  </div>
-			  <div class="progress-bar progress-bar-info progress-bar-striped" style="width: 5%">
-			    <span class="sr-only">5% Complete (danger)</span>
-			  </div>
-			</div>   
-        </div>
-      </div>
-    </div>
-   </div>
-  </div> 
-  </div>
-  <div class="row">
-  			<div class="progress">
-			  <div class="progress-bar progress-bar-success" style="width: 35%">
-			    <span>35 Ramesh</span>
-			  </div>
-			  <div class="progress-bar progress-bar-info" style="width: 20%">
-			    <span>20 Suresh</span>
-			  </div>
-			  <div class="progress-bar progress-bar-warning" style="width: 20%">
-			    <span>20 Neel</span>
-			  </div>
-			  <div class="progress-bar progress-bar-danger" style="width: 10%">
-			    <span>10 Sunil</span>
-			  </div>
-			  <div class="progress-bar progress-bar-success progress-bar-striped" style="width: 10%">
-			    <span>10 Lokesh</span>
-			  </div>
-			  <div class="progress-bar progress-bar-info progress-bar-striped" style="width: 5%">
-			    <span>5 Pankaj</span>
-			  </div>
-			</div> 
-  </div>
-
-				</c:forEach>
+				      </div>
+				    </div>
+				</div>
+				<div class="row">
+					  <div class="panel-group" id="accordion">
+						  <div class="col-md-6">
+						    <div class="panel panel-default">
+						      <div class="panel-heading">
+						        <h4 class="panel-title">
+						          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Click to View Barcode Image <span class="caret"></span></a>
+						        </h4>
+						      </div>
+						      <div id="collapse1" class="panel-collapse collapse">
+						        <div class="panel-body">
+									<img class="col-md-4" alt=<c:out value="${param.fileid}"/> style="width: 200px; height: 200px;"  src=<c:out value="http://localhost:8080/barcode4j/gensvg?type=code128&msg=${param.fileid}"/> /> 
+						        </div>
+						      </div>
+						    </div>
+						   </div>
+						   <div class="col-md-6">
+						    <div class="panel panel-default">
+						      <div class="panel-heading">
+						        <h4 class="panel-title">
+						          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Click to View File Time Chart <span class="caret"></span></a>
+						        </h4>
+						      </div>
+						      <div id="collapse2" class="panel-collapse collapse in">
+						        <div class="panel-body">
+									<canvas class="col-md-4" id="myChart" class="chart" style="width: 200px; height: 200px;"></canvas> 
+									<div class="progress">
+									  <div class="progress-bar progress-bar-success" style="width: 35%">
+									    <span class="sr-only">35% Complete (success)</span>
+									  </div>
+									  <div class="progress-bar progress-bar-info" style="width: 20%">
+									    <span class="sr-only">20% Complete (info)</span>
+									  </div>
+									  <div class="progress-bar progress-bar-warning" style="width: 20%">
+									    <span class="sr-only">20% Complete (warning)</span>
+									  </div>
+									  <div class="progress-bar progress-bar-danger" style="width: 10%">
+									    <span class="sr-only">10% Complete (danger)</span>
+									  </div>
+									  <div class="progress-bar progress-bar-success progress-bar-striped" style="width: 10%">
+									    <span class="sr-only">10% Complete (danger)</span>
+									  </div>
+									  <div class="progress-bar progress-bar-info progress-bar-striped" style="width: 5%">
+									    <span class="sr-only">5% Complete (danger)</span>
+									  </div>
+									</div>   
+						        </div>
+						      </div>
+						    </div>
+						   </div>
+					  </div> 
+				</div>
+			  	<div class="row">
+	  				<div class="progress">
+					  <div class="progress-bar progress-bar-success" style="width: 35%">
+					    <span>35 Ramesh</span>
+					  </div>
+					  <div class="progress-bar progress-bar-info" style="width: 20%">
+					    <span>20 Suresh</span>
+					  </div>
+					  <div class="progress-bar progress-bar-warning" style="width: 20%">
+					    <span>20 Neel</span>
+					  </div>
+					  <div class="progress-bar progress-bar-danger" style="width: 10%">
+					    <span>10 Sunil</span>
+					  </div>
+					  <div class="progress-bar progress-bar-success progress-bar-striped" style="width: 10%">
+					    <span>10 Lokesh</span>
+					  </div>
+					  <div class="progress-bar progress-bar-info progress-bar-striped" style="width: 5%">
+					    <span>5 Pankaj</span>
+					  </div>
+					</div> 
+			  	</div>
+			</c:forEach>
 		</div>
 
 		<div class="table-responsive">

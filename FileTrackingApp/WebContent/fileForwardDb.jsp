@@ -18,8 +18,8 @@
 			<c:param name="errMsg" value="1" />
 		</c:redirect>
 	</c:if>
-	<sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
-		url="jdbc:mysql://localhost/file_mgmt" user="root" password="" />
+<%-- 	<sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
+		url="jdbc:mysql://localhost/file_mgmt" user="root" password="" /> --%>
 
 					<sql:update dataSource="${snapshot}" var="count">
 					insert into file_log ( file_id, from_section, from_user, to_section, to_user, priority, remarks, status, forwarded_date, received_date)

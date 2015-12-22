@@ -11,7 +11,7 @@
   <body>
     <c:if test="${ empty param.username or empty param.password}">
       <c:redirect url="index.jsp" >
-              <c:param name="errMsg" value="Please Enter UserName and Password" />
+              <c:param name="errMsg" value="Please Enter User Name and Password" />
       </c:redirect>
        
     </c:if>
@@ -33,7 +33,7 @@ SELECT count(*) as kount from user where user_name = '${param.username}' and pas
           </c:when>
           <c:otherwise>
             <c:redirect url="index.jsp" >
-              <c:param name="errMsg" value="Username/password does not match" />
+              <c:param name="errMsg" value="Incorrect User Name or Password" />
             </c:redirect>
           </c:otherwise>
         </c:choose>

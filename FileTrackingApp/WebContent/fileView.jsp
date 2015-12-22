@@ -16,8 +16,8 @@
 		<div class="page-header">
 			<h1 class="text-center">View My Files</h1>
 		</div>
-		<sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
-			url="jdbc:mysql://localhost/file_mgmt" user="root" password="" />
+<%-- 		<sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
+			url="jdbc:mysql://localhost/file_mgmt" user="root" password="" /> --%>
 
 		<c:choose>
 			<c:when test="${param.action == 'reject'}">
